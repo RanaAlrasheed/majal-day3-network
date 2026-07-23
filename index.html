@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAJAL Day 3 — Network Evidence & Defense</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="css/majal-theme.css">
+</head>
+<body>
+<div class="reveal majal"><div class="slides">
+<section class="cover" data-transition="zoom"><div class="kicker">MAJAL Learning Module · Day 3</div><h1>Network Evidence & Defense</h1><p class="subtitle">Follow packets, identify protocols, investigate threats, and connect network evidence to the Day 2 phishing case.</p><div class="badges"><span>Reveal.js</span><span>Interactive Lab</span><span>Beginner Friendly</span></div></section>
+<section class="section-divider"><span>01</span><h2>Opening Hook — Follow the Packet</h2><p>Every network story starts with a tiny unit of evidence.</p></section>
+<section><h2>Hook: A message leaves your laptop</h2><div class="journey"><div class="node">You</div><div class="packet fragment">Packet</div><div class="node">Router</div><div class="node">Website</div></div><p class="prompt">Question: what clues travel with it?</p><ul><li class="fragment">Source IP: where it came from.</li><li class="fragment">Destination IP: where it is going.</li><li class="fragment">Port + protocol: which door and language it uses.</li></ul></section>
+<section><h2>Packet Journey: evidence trail</h2><div class="timeline"><div><b>1</b><span>App creates data</span></div><div><b>2</b><span>Transport adds ports</span></div><div><b>3</b><span>Internet adds IPs</span></div><div><b>4</b><span>Network sends frames</span></div></div><aside class="notes">Use fragments to ask learners to predict the next wrapper.</aside></section>
+<section><h2>Source IP vs Destination IP</h2><div class="two-col"><div class="card"><h3>Source IP</h3><p>The device that started this packet. Useful for finding patient zero or a noisy scanner.</p></div><div class="card"><h3>Destination IP</h3><p>The system being contacted. Useful for spotting command-and-control, cloud services, or internal targets.</p></div></div></section>
+<section><h2>Ports are doors</h2><div class="port-grid"><button data-answer="80">HTTP 80</button><button data-answer="443">HTTPS 443</button><button data-answer="22">SSH 22</button><button data-answer="3389">RDP 3389</button></div><p class="prompt">Activity: choose which door a secure website usually uses.</p></section>
+<section class="checkpoint"><h2>Checkpoint</h2><p>A packet from <code>10.0.0.8:51514</code> to <code>93.184.216.34:443</code> most likely represents what?</p><ol><li class="fragment">A local device using a temporary source port.</li><li class="fragment correct">A connection to an HTTPS service.</li><li class="fragment">A file share request.</li></ol></section>
+<section class="section-divider"><span>02</span><h2>Network Fundamentals</h2><p>Build the mental model before opening Wireshark.</p></section>
+<section><h2>What is a network?</h2><div class="diagram lan"><span>Laptop</span><span>Switch</span><span>Router</span><span>Internet</span></div><p>Networks move data between devices using agreed addressing, timing, and rules.</p></section>
+<section><h2>Packets: small, inspectable chunks</h2><div class="packet-card"><span>Header</span><span>Payload</span><span>Trailer</span></div><ul><li class="fragment">Headers hold evidence: IPs, ports, flags, lengths.</li><li class="fragment">Payload may contain requests, responses, or encrypted bytes.</li></ul></section>
+<section><h2>IP addresses: device location clues</h2><div class="two-col"><div class="card"><h3>Private</h3><p>10.0.0.0/8 · 172.16.0.0/12 · 192.168.0.0/16</p></div><div class="card"><h3>Public</h3><p>Routable on the internet and often enriched with domain, ASN, and reputation context.</p></div></div></section>
+<section><h2>Ports: application context</h2><table><tr><th>Port</th><th>Common service</th><th>Evidence question</th></tr><tr><td>53</td><td>DNS</td><td>What domain was resolved?</td></tr><tr><td>80/443</td><td>Web</td><td>Was it encrypted?</td></tr><tr><td>445</td><td>SMB</td><td>Was lateral movement attempted?</td></tr></table></section>
+<section><h2>OSI Security View</h2><table><tr><th>Layer</th><th>Security lens</th></tr><tr><td>Application</td><td>Phishing links, web requests, credentials</td></tr><tr><td>Transport</td><td>TCP flags, UDP floods, ports</td></tr><tr><td>Network</td><td>IP routes, scans, suspicious destinations</td></tr><tr><td>Data Link</td><td>MAC addresses, local spoofing</td></tr></table></section>
+<section><h2>TCP/IP model for investigators</h2><div class="stack"><span>Application</span><span>Transport</span><span>Internet</span><span>Network Access</span></div><p class="fragment">Wireshark lets you expand each layer and ask: who, what service, what content?</p></section>
+<section class="section-divider"><span>03</span><h2>TCP vs UDP</h2><p>Reliability, speed, and what attackers exploit.</p></section>
+<section><h2>TCP vs UDP comparison</h2><table><tr><th></th><th>TCP</th><th>UDP</th></tr><tr><td>Connection</td><td>Handshake</td><td>No handshake</td></tr><tr><td>Use case</td><td>Accuracy</td><td>Speed</td></tr><tr><td>Example</td><td>Banking login</td><td>Video call</td></tr><tr><td>Security clue</td><td>Flags and sessions</td><td>Volume and unusual destinations</td></tr></table></section>
+<section><h2>TCP Handshake</h2><div class="handshake"><span class="fragment">SYN →</span><span class="fragment">← SYN/ACK</span><span class="fragment">ACK →</span></div><p class="fragment">A repeated SYN without completion can indicate scanning or blocked access.</p></section>
+<section><h2>Banking example: choose TCP</h2><div class="card accent"><p>When money moves, every byte matters. TCP retransmits missing pieces and keeps order.</p></div></section>
+<section><h2>Video call example: choose UDP</h2><div class="card accent"><p>When a voice packet is late, replaying it is worse than skipping it. UDP prioritizes flow.</p></div></section>
+<section><h2>Security angle</h2><div class="cards"><div class="card fragment">TCP scans reveal open doors.</div><div class="card fragment">UDP floods can overwhelm services.</div><div class="card fragment">Both become evidence when paired with time, host, and intent.</div></div></section>
+<section class="checkpoint"><h2>Individual Checkpoint</h2><p>Which protocol family would you expect for DNS lookups, and why might attackers abuse it?</p><p class="fragment correct">Often UDP/53; attackers can use frequent or patterned DNS requests for tunneling or beaconing.</p></section>
+<section class="section-divider"><span>04</span><h2>Common Protocols</h2><p>Default ports, purpose, usage, and security considerations.</p></section>
+<section><h2>HTTP</h2><div class="protocol"><b>Port 80</b><p>Transfers web content in cleartext. Used by websites and APIs. Security concern: content and credentials can be observed or modified.</p></div></section>
+<section><h2>HTTPS</h2><div class="protocol"><b>Port 443</b><p>HTTP over TLS. Used for secure websites, cloud apps, and APIs. Security concern: encrypted payload hides content, but metadata still matters.</p></div></section>
+<section><h2>DNS</h2><div class="protocol"><b>Port 53 UDP/TCP</b><p>Translates names to IPs. Used before most web connections. Security concern: suspicious domains, tunneling, and malicious redirects.</p></div></section>
+<section><h2>SSH</h2><div class="protocol"><b>Port 22</b><p>Secure remote command-line administration. Security concern: brute force attempts, exposed servers, stolen keys.</p></div></section>
+<section><h2>SMB</h2><div class="protocol"><b>Port 445</b><p>Windows file and printer sharing. Security concern: lateral movement, exposed shares, ransomware propagation.</p></div></section>
+<section><h2>RDP</h2><div class="protocol"><b>Port 3389</b><p>Remote desktop access. Security concern: password spraying, exposed remote access, suspicious login geography.</p></div></section>
+<section class="section-divider"><span>05</span><h2>IoT Devices</h2><p>Small devices, big attack surface.</p></section>
+<section><h2>IoT attack surface</h2><div class="cards"><div class="card">Cameras</div><div class="card">Smart TVs</div><div class="card">Printers</div><div class="card">Sensors</div></div><p class="fragment">They often run web panels, outdated firmware, and remote management services.</p></section>
+<section><h2>Default credentials</h2><div class="warning">admin/admin is not a security strategy.</div><p>Beginner example: a camera joins Wi‑Fi, keeps its factory password, then becomes an attacker’s foothold.</p></section>
+<section><h2>Compromised device behavior</h2><ul><li class="fragment">Unexpected outbound connections.</li><li class="fragment">DNS lookups to strange domains.</li><li class="fragment">Traffic spikes at regular intervals.</li><li class="fragment">Connections to many external IPs.</li></ul></section>
+<section class="section-divider"><span>06</span><h2>Network Security Controls</h2><p>Firewall, IDS, and IPS in action.</p></section>
+<section><h2>Firewall</h2><div class="control-card"><b>Decision:</b> allow or block traffic based on rules.</div><p>Scenario: block inbound RDP from the internet; allow HTTPS outbound to business apps.</p></section>
+<section><h2>IDS</h2><div class="control-card"><b>Decision:</b> alert when traffic looks suspicious.</div><p>Scenario: detect a port scan and create an alert for the analyst.</p></section>
+<section><h2>IPS</h2><div class="control-card"><b>Decision:</b> actively stop suspicious traffic.</div><p>Scenario: drop exploit traffic before it reaches a vulnerable server.</p></section>
+<section><h2>Controls comparison</h2><table><tr><th>Control</th><th>Primary action</th><th>Risk</th></tr><tr><td>Firewall</td><td>Permit/deny by policy</td><td>Bad rules create gaps</td></tr><tr><td>IDS</td><td>Alert</td><td>Noise and missed alerts</td></tr><tr><td>IPS</td><td>Block</td><td>False positives can disrupt work</td></tr></table></section>
+<section class="section-divider"><span>07</span><h2>Wireshark Introduction</h2><p>Turn packets into evidence.</p></section>
+<section><h2>Packet capture workflow</h2><div class="timeline"><div><b>1</b><span>Select interface</span></div><div><b>2</b><span>Capture traffic</span></div><div><b>3</b><span>Filter noise</span></div><div><b>4</b><span>Follow evidence</span></div></div></section>
+<section><h2>Filters investigators use</h2><pre><code>ip.addr == 10.0.0.8
+http
+ssl || tls
+tcp.port == 445
+dns.qry.name contains "login"</code></pre></section>
+<section><h2>Source & destination analysis</h2><div class="two-col"><div class="card"><h3>Start with source</h3><p>Which internal host is most active or unusual?</p></div><div class="card"><h3>Then destination</h3><p>Which external IP, service, or domain explains the behavior?</p></div></div></section>
+<section class="section-divider"><span>08</span><h2>Labs</h2><p>Guided practice with clues, filters, and decisions.</p></section>
+<section><h2>Lab 1: Wireshark Fundamentals</h2><ol><li>Open a capture.</li><li>Find top talkers.</li><li>Apply DNS and HTTP filters.</li><li>Write one evidence sentence.</li></ol></section>
+<section><h2>Lab 2: Threat Investigation</h2><div class="cards"><div class="card">Port scan detection: many ports, short time window.</div><div class="card">C2 beacon detection: repeated, timed outbound traffic.</div></div></section>
+<section><h2>Lab 2 guided hunt</h2><table><tr><th>Clue</th><th>Filter</th><th>Decision</th></tr><tr><td>SYN bursts</td><td><code>tcp.flags.syn == 1</code></td><td>Possible scan</td></tr><tr><td>60-second HTTPS</td><td><code>tcp.port == 443</code></td><td>Possible beacon</td></tr></table></section>
+<section><h2>Lab 3: HTML Packet Challenge</h2><p>Inspect a simplified packet card when Wireshark is unavailable.</p><div class="packet-card"><span>Src 10.0.0.8</span><span>Dst 203.0.113.50</span><span>Port 80</span><span>GET /login</span></div></section>
+<section><h2>No-Wireshark fallback</h2><ol><li>Read each field like a packet header.</li><li>Map port to protocol.</li><li>Describe source, destination, and intent.</li><li>Flag risks: cleartext login path over HTTP.</li></ol></section>
+<section class="section-divider"><span>09</span><h2>Final Investigation</h2><p>Day 2 phishing meets Day 3 network evidence.</p></section>
+<section><h2>Case timeline</h2><div class="timeline"><div><b>Day 2</b><span>Phishing email clicked</span></div><div><b>+2 min</b><span>DNS lookup</span></div><div><b>+3 min</b><span>HTTPS to payload host</span></div><div><b>+10 min</b><span>Beacon pattern begins</span></div></div></section>
+<section><h2>Packet analysis</h2><div class="evidence"><div>Email link domain</div><div>DNS query from victim</div><div>HTTPS session to unknown IP</div><div>Repeated callbacks every 60 seconds</div></div></section>
+<section><h2>Evidence correlation</h2><p class="prompt">Build the story:</p><ul><li class="fragment">Who clicked? Match endpoint user to source IP.</li><li class="fragment">Where did it go? Match domain to destination IP.</li><li class="fragment">What happened next? Match timing to beaconing.</li><li class="fragment">What control responded? Firewall/IDS/IPS logs.</li></ul></section>
+<section class="section-divider"><span>10</span><h2>Closing Challenge & Wrap Up</h2><p>Explain network evidence in plain language.</p></section>
+<section><h2>Closing Challenge</h2><p>You have 90 seconds: choose one packet clue and explain how it changes the investigation.</p><div class="badges"><span>IP</span><span>Port</span><span>Protocol</span><span>Timing</span><span>Payload</span></div></section>
+<section><h2>Exit Ticket</h2><ol><li>One thing I can now identify in a packet is…</li><li>One protocol I will investigate carefully is…</li><li>One security control I understand better is…</li></ol></section>
+<section class="summary"><h2>Wrap Up</h2><div class="cards"><div class="card">Packets carry evidence.</div><div class="card">Protocols reveal intent.</div><div class="card">Controls shape what is allowed, alerted, or blocked.</div><div class="card">Network evidence completes the phishing story.</div></div></section>
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="js/majal.js"></script>
+</body></html>
