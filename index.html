@@ -1,62 +1,4376 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAJAL Day 3 — Network Evidence & Defense</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
-<link rel="stylesheet" href="css/majal-theme.css">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+MAJAL Day 3
+Network Security & Threats
+</title>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+
+<link rel="stylesheet"
+href="css/majal-theme.css">
+
 </head>
+
 <body>
-<div class="reveal majal"><div class="slides">
-<section class="cover" data-transition="zoom"><div class="kicker">MAJAL Learning Module · Day 3</div><h1>Network Evidence & Defense</h1><p class="subtitle">Follow packets, identify protocols, investigate threats and analyse network evidence.</p><div class="badges"><span>Reveal.js</span><span>Interactive Lab</span><span>Beginner Friendly</span></div></section>
-<section class="section-divider"><span>01</span><h2>Opening Hook — Follow the Packet</h2><p>Every network story starts with a tiny unit of evidence.</p></section>
-<section><h2>Hook: A message leaves your laptop</h2><div class="timeline-box fragment">A user sends a request across the network.</div><div class="timeline-box fragment">The packet receives addressing information.</div><div class="timeline-box fragment">The packet reaches its destination.</div><div class="activity-card fragment"><p class="question">What clues travel with every packet?</p></div></section>
-<section><h2>Packet Journey: Evidence Trail</h2><div class="timeline"><div><b>1</b><span>Application creates data</span></div><div><b>2</b><span>Transport adds ports</span></div><div><b>3</b><span>Internet adds IPs</span></div><div><b>4</b><span>Network sends frames</span></div></div></section>
-<section><h2>Source IP vs Destination IP</h2><div class="cards"><div class="card"><h3>Source IP</h3><p>The device that initiated the communication.</p></div><div class="card"><h3>Destination IP</h3><p>The system that receives the packet.</p></div></div></section>
-<section><h2>Ports are Doors</h2><div class="port-grid"><button>HTTP 80</button><button>HTTPS 443</button><button>SSH 22</button><button>RDP 3389</button></div></section>
-<section class="checkpoint"><h2>Checkpoint</h2><p>A connection to port 443 usually indicates which protocol?</p><p class="fragment correct">HTTPS</p></section>
-<section class="section-divider"><span>02</span><h2>Network Fundamentals</h2></section>
-<section><h2>What is a Network?</h2><div class="network-card">Networks move information between connected devices using protocols and addressing.</div></section>
-<section><h2>Packets</h2><div class="packet-card"><span>Header</span><span>Payload</span><span>Trailer</span></div></section>
-<section><h2>IP Addresses</h2><div class="cards"><div class="card"><h3>Private IP</h3><p>Used inside local networks.</p></div><div class="card"><h3>Public IP</h3><p>Accessible across the Internet.</p></div></div></section>
-<section><h2>Ports</h2><table><tr><th>Port</th><th>Service</th></tr><tr><td>53</td><td>DNS</td></tr><tr><td>443</td><td>HTTPS</td></tr><tr><td>445</td><td>SMB</td></tr></table></section>
-<section><h2>TCP/IP Model</h2><div class="stack"><span>Application</span><span>Transport</span><span>Internet</span><span>Network Access</span></div></section>
-<section class="section-divider"><span>03</span><h2>TCP vs UDP</h2></section>
-<section><h2>TCP vs UDP Comparison</h2><table><tr><th>TCP</th><th>UDP</th></tr><tr><td>Reliable</td><td>Fast</td></tr><tr><td>Ordered</td><td>Connectionless</td></tr></table></section>
-<section><h2>TCP Handshake</h2><div class="timeline-box fragment">SYN →</div><div class="timeline-box fragment">← SYN / ACK</div><div class="timeline-box fragment">ACK →</div></section>
-<section><h2>TCP Example</h2><div class="activity-card">Banking and secure logins rely on TCP reliability.</div></section>
-<section><h2>UDP Example</h2><div class="activity-card">Video calls favour UDP for speed.</div></section>
-<section class="section-divider"><span>04</span><h2>Common Protocols</h2></section>
-<section><h2>HTTP</h2><div class="protocol-card"><p><strong>Port:</strong> 80</p><p>Transfers web traffic in cleartext.</p></div></section>
-<section><h2>HTTPS</h2><div class="protocol-card"><p><strong>Port:</strong> 443</p><p>Provides encrypted communication.</p></div></section>
-<section><h2>DNS</h2><div class="protocol-card"><p><strong>Port:</strong> 53</p><p>Translates domain names to IP addresses.</p></div></section>
-<section><h2>SSH</h2><div class="protocol-card"><p><strong>Port:</strong> 22</p><p>Provides secure remote access.</p></div></section>
-<section><h2>SMB</h2><div class="protocol-card"><p><strong>Port:</strong> 445</p><p>Supports Windows file sharing.</p></div></section>
-<section><h2>RDP</h2><div class="protocol-card"><p><strong>Port:</strong> 3389</p><p>Enables remote desktop access.</p></div></section>
-<section class="section-divider"><span>05</span><h2>IoT Devices</h2></section>
-<section><h2>IoT Attack Surface</h2><div class="cards"><div class="card">Smart Cameras</div><div class="card">Printers</div><div class="card">Sensors</div></div></section>
-<section><h2>Default Credentials</h2><div class="warning">Default passwords increase organisational risk.</div></section>
-<section class="section-divider"><span>06</span><h2>Network Security Controls</h2></section>
-<section><h2>Firewall</h2><div class="control-card">Allows or blocks traffic based on predefined rules.</div></section>
-<section><h2>IDS</h2><div class="control-card">Detects suspicious behaviour and generates alerts.</div></section>
-<section><h2>IPS</h2><div class="control-card">Stops malicious traffic automatically.</div></section>
-<section class="section-divider"><span>07</span><h2>Wireshark Introduction</h2></section>
-<section><h2>Network Detective</h2><div class="packet-box"><h3>Captured Packet</h3><span>192.168.1.10</span><span>443</span><span>HTTPS</span><span>104.xx.xx.xx</span></div><div class="activity-card fragment">Identify the source IP, destination and protocol.</div></section>
-<section><h2>Useful Filters</h2><pre><code>ip.addr == 10.0.0.8
+
+<div class="reveal majal">
+
+<div class="slides">
+
+
+<!--=================================
+COVER PAGE
+==================================-->
+
+
+<section class="cover"
+data-transition="zoom">
+
+<div class="kicker">
+
+MAJAL Learning Module
+DAY 3
+
+</div>
+
+
+<h1>
+
+Network Security
+&
+Threats
+
+</h1>
+
+
+<p class="subtitle">
+
+Follow one packet on its journey
+across the network and learn how
+security professionals investigate
+what happened.
+
+</p>
+
+
+<div class="badges">
+
+<span>
+Interactive Workshop
+</span>
+
+<span>
+Individual Labs
+</span>
+
+<span>
+Wireshark Investigation
+</span>
+
+<span>
+Network Security
+</span>
+
+</div>
+
+</section>
+
+
+
+<!--=================================
+OPENING HOOK
+==================================-->
+
+
+<section class="section-divider">
+
+<span>
+01
+</span>
+
+<h2>
+
+Opening Hook
+
+</h2>
+
+
+<p>
+
+Every packet tells a story.
+
+</p>
+
+</section>
+
+
+
+<section>
+
+<h2>
+
+Today's Mission
+
+</h2>
+
+
+<div class="activity-card">
+
+<p class="question">
+
+Someone clicked a link.
+
+</p>
+
+
+<p>
+
+Can we discover:
+
+</p>
+
+
+<ul>
+
+<li>Where did it go?</li>
+
+<li>Who sent it?</li>
+
+<li>Which protocol carried it?</li>
+
+<li>Can we prove compromise?</li>
+
+</ul>
+
+
+</div>
+
+</section>
+
+
+
+
+<section>
+
+<h2>
+
+Follow The Packet
+
+</h2>
+
+
+<div class="timeline-box fragment">
+
+A packet leaves the user's laptop.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+A Source IP address is assigned.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+A Destination IP address appears.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+A Port number determines
+which service receives it.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+A Protocol carries the data.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+<h2>
+
+What Does A Packet Carry?
+
+</h2>
+
+
+<div class="packet-box">
+
+<h3>
+
+Today's Four Clues
+
+</h3>
+
+
+<span>
+Source IP
+</span>
+
+
+<span>
+Destination IP
+</span>
+
+
+<span>
+Port
+</span>
+
+
+<span>
+Protocol
+</span>
+
+
+</div>
+
+
+<div class="activity-card fragment">
+
+<p class="question">
+
+These four clues will follow us
+throughout today's workshop.
+
+</p>
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="checkpoint">
+
+<h2>
+
+Checkpoint
+
+</h2>
+
+
+<p>
+
+Before today ends, you should
+be able to identify:
+
+</p>
+
+
+<ul>
+
+<li>Source IP</li>
+
+<li>Destination IP</li>
+
+<li>Port Number</li>
+
+<li>Protocol Name</li>
+
+</ul>
+
+
+<p class="fragment correct">
+
+Every packet tells a story.
+
+</p>
+
+
+</section>
+
+
+
+<!--=================================
+NETWORK FUNDAMENTALS
+==================================-->
+
+
+<section class="section-divider">
+
+
+<span>
+02
+</span>
+
+
+<h2>
+
+Network Fundamentals
+
+</h2>
+
+
+<p>
+
+Every packet has an address,
+a destination and a purpose.
+
+</p>
+
+
+</section>
+
+
+
+
+<section>
+
+<h2>
+
+What Is A Network?
+
+</h2>
+
+
+<div class="network-card">
+
+Networks allow devices to
+communicate by sending packets
+using protocols, IP addresses and
+ports.
+
+</div>
+
+
+<div class="activity-card fragment">
+
+<p class="question">
+
+Without a network, your laptop
+cannot talk to anything else.
+
+</p>
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+<h2>
+
+What Is A Packet?
+
+</h2>
+
+
+<div class="packet-card">
+
+<span>
+Header
+</span>
+
+
+<span>
+Payload
+</span>
+
+
+<span>
+Trailer
+</span>
+
+
+</div>
+
+
+<div class="activity-card fragment">
+
+A packet is simply a small unit
+of information travelling between
+devices.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+<h2>
+
+IP Addresses
+
+</h2>
+
+
+<div class="cards">
+
+
+<div class="card fragment">
+
+<h3>
+
+Private IP
+
+</h3>
+
+
+<p>
+
+Used inside local networks.
+
+</p>
+
+
+<p>
+
+Example:
+
+</p>
+
+<p>
+
+192.168.1.15
+
+</p>
+
+
+</div>
+
+
+
+<div class="card fragment">
+
+
+<h3>
+
+Public IP
+
+</h3>
+
+
+<p>
+
+Accessible across the Internet.
+
+</p>
+
+
+<p>
+
+Example:
+
+</p>
+
+<p>
+
+142.xx.xx.xx
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+<h2>
+
+Ports Are Doors
+
+</h2>
+
+
+<div class="port-grid">
+
+<button>
+
+HTTP
+80
+
+</button>
+
+
+<button>
+
+HTTPS
+443
+
+</button>
+
+
+<button>
+
+SSH
+22
+
+</button>
+
+
+<button>
+
+RDP
+3389
+
+</button>
+
+
+</div>
+
+
+<div class="activity-card fragment">
+
+Think of a port number as
+the door that receives the traffic.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+<h2>
+
+TCP/IP Model
+
+</h2>
+
+
+<div class="stack">
+
+<span>
+Application
+</span>
+
+<span>
+Transport
+</span>
+
+<span>
+Internet
+</span>
+
+<span>
+Network Access
+</span>
+
+</div>
+
+
+<div class="activity-card fragment">
+
+Today we only care about the
+layers that help us investigate
+network traffic.
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="checkpoint">
+
+<h2>
+
+Checkpoint
+
+</h2>
+
+
+<p class="question">
+
+Which one identifies
+the service receiving traffic?
+
+</p>
+
+
+<ul>
+
+<li>IP Address ?</li>
+
+<li>Port Number ?</li>
+
+<li>Protocol ?</li>
+
+</ul>
+
+
+<p class="fragment correct">
+
+Answer:
+
+Port Number
+
+</p>
+
+
+</section>
+
+  <!--=================================
+TCP vs UDP
+==================================-->
+
+
+<section class="section-divider">
+
+
+<span>
+03
+</span>
+
+
+<h2>
+
+TCP vs UDP
+
+</h2>
+
+
+<p>
+
+Should we choose speed or
+reliability?
+
+</p>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Two Different Conversations
+
+</h2>
+
+
+<div class="cards">
+
+
+<div class="card fragment">
+
+
+<h3>
+
+TCP
+
+</h3>
+
+
+<p>
+
+Reliable communication.
+
+</p>
+
+
+<ul>
+
+<li>Banking</li>
+
+<li>Emails</li>
+
+<li>HTTPS</li>
+
+<li>Software Updates</li>
+
+</ul>
+
+
+</div>
+
+
+
+<div class="card fragment">
+
+
+<h3>
+
+UDP
+
+</h3>
+
+
+<p>
+
+Fast communication.
+
+</p>
+
+
+<ul>
+
+<li>Gaming</li>
+
+<li>Streaming</li>
+
+<li>Video Calls</li>
+
+<li>DNS Requests</li>
+
+</ul>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Real World Example
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+Imagine transferring:
+
+</p>
+
+
+<h1>
+
+10,000 SAR
+
+</h1>
+
+
+<p>
+
+Would you choose speed?
+
+</p>
+
+
+<p>
+
+or
+
+</p>
+
+
+<p class="highlight">
+
+Reliability?
+
+</p>
+
+
+</div>
+
+
+<div class="fragment">
+
+<p>
+
+TCP is preferred because losing
+a packet could corrupt important
+information.
+
+</p>
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Video Call Example
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+Imagine joining an online meeting.
+
+</p>
+
+
+<p>
+
+Would you rather:
+
+</p>
+
+
+<ul>
+
+<li>Lose one frame?</li>
+
+<li>Or freeze for three seconds?</li>
+
+</ul>
+
+
+</div>
+
+
+
+<div class="fragment">
+
+
+<p class="highlight">
+
+UDP is usually preferred because
+speed matters more than perfection.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+TCP Three Way Handshake
+
+</h2>
+
+
+<div class="timeline-box fragment">
+
+SYN
+
+<br>
+
+"Can we communicate?"
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+SYN / ACK
+
+<br>
+
+"Yes, I received your request."
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+ACK
+
+<br>
+
+"Connection established."
+
+</div>
+
+
+
+<div class="activity-card fragment">
+
+Reliable communication starts here.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Security Perspective
+
+</h2>
+
+
+<div class="cards">
+
+
+<div class="card fragment">
+
+
+<h3>
+
+TCP
+
+</h3>
+
+
+<p>
+
+Reliable and easier to follow
+during investigations.
+
+</p>
+
+
+</div>
+
+
+
+<div class="card fragment">
+
+
+<h3>
+
+UDP
+
+</h3>
+
+
+<p>
+
+Fast communication that may
+be abused during attacks such
+as amplification attacks.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Think Like An Investigator
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+Which protocol would you use for:
+
+</p>
+
+
+<ul>
+
+<li>Online Banking?</li>
+
+<li>Video Streaming?</li>
+
+<li>DNS Requests?</li>
+
+<li>File Downloads?</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="checkpoint">
+
+
+<h2>
+
+Checkpoint
+
+</h2>
+
+
+<p>
+
+Choose the correct answer.
+
+</p>
+
+
+<ul>
+
+<li>
+Banking = ?
+</li>
+
+<li>
+Video Calls = ?
+</li>
+
+<li>
+DNS Requests = ?
+</li>
+
+<li>
+Software Updates = ?
+</li>
+
+</ul>
+
+
+<p class="fragment correct">
+
+Banking = TCP
+
+<br>
+
+Video Calls = UDP
+
+<br>
+
+DNS = UDP
+
+<br>
+
+Software Updates = TCP
+
+</p>
+
+
+</section>
+
+  <!--=================================
+COMMON PROTOCOLS
+==================================-->
+
+
+<section class="section-divider">
+
+
+<span>
+04
+</span>
+
+
+<h2>
+
+Common Protocols
+
+</h2>
+
+
+<p>
+
+Protocols tell us HOW devices
+communicate across networks.
+
+</p>
+
+
+</section>
+
+
+
+<!--=================================
+HTTP
+==================================-->
+
+
+<section>
+
+
+<h2>
+
+HTTP
+
+</h2>
+
+
+<div class="protocol-card">
+
+
+<h3>
+
+Port 80
+
+</h3>
+
+
+<p>
+
+HTTP transfers web traffic
+without encryption.
+
+</p>
+
+
+</div>
+
+
+<div class="activity-card fragment">
+
+
+<p class="question">
+
+Where do we see HTTP?
+
+</p>
+
+
+<ul>
+
+<li>Web Pages</li>
+
+<li>Downloads</li>
+
+<li>Images</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Why Should We Care?
+
+</h2>
+
+
+<div class="warning">
+
+HTTP traffic is NOT encrypted.
+
+<br><br>
+
+Anyone monitoring the traffic
+may be able to view the contents.
+
+</div>
+
+
+<div class="fragment">
+
+
+<p>
+
+Attackers may abuse insecure
+communications when sensitive
+information is transmitted.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+<!--=================================
+HTTPS
+==================================-->
+
+
+<section>
+
+
+<h2>
+
+HTTPS
+
+</h2>
+
+
+<div class="protocol-card">
+
+
+<h3>
+
+Port 443
+
+</h3>
+
+
+<p>
+
+HTTPS provides encrypted
+communication between devices.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Real World Example
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+You are logging into:
+
+</p>
+
+
+<h1>
+
+Your Bank Account
+
+</h1>
+
+
+<p>
+
+Would you prefer encrypted
+or unencrypted communication?
+
+</p>
+
+
+</div>
+
+
+<div class="fragment">
+
+<p class="highlight">
+
+HTTPS protects sensitive data
+during transmission.
+
+</p>
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Why Attackers Like HTTPS
+
+</h2>
+
+
+<div class="warning">
+
+Encrypted traffic protects users.
+
+<br><br>
+
+However, attackers may also
+hide malicious communications
+inside encrypted traffic.
+
+</div>
+
+
+</section>
+
+
+
+<!--=================================
+DNS
+==================================-->
+
+
+<section>
+
+
+<h2>
+
+DNS
+
+</h2>
+
+
+<div class="protocol-card">
+
+
+<h3>
+
+Port 53
+
+</h3>
+
+
+<p>
+
+DNS translates names into
+IP addresses.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+How Does DNS Work?
+
+</h2>
+
+
+<div class="timeline-box fragment">
+
+You type:
+
+google.com
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+DNS receives the request.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+An IP address is returned.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+Your browser connects to Google.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Why Attackers Like DNS
+
+</h2>
+
+
+<div class="warning">
+
+Attackers may abuse DNS to:
+
+<ul>
+
+<li>Hide communications.</li>
+
+<li>Contact malicious domains.</li>
+
+<li>Transfer small amounts of data.</li>
+
+</ul>
+
+</div>
+
+
+</section>
+
+
+
+
+<!--=================================
+SSH
+==================================-->
+
+
+<section>
+
+
+<h2>
+
+SSH
+
+</h2>
+
+
+<div class="protocol-card">
+
+
+<h3>
+
+Port 22
+
+</h3>
+
+
+<p>
+
+SSH provides secure remote
+access to systems.
+
+</p>
+
+
+</div>
+
+
+<div class="activity-card fragment">
+
+System administrators use SSH
+to manage servers remotely.
+
+</div>
+
+
+</section>
+
+
+
+
+<!--=================================
+SMB
+==================================-->
+
+
+<section>
+
+
+<h2>
+
+SMB
+
+</h2>
+
+
+<div class="protocol-card">
+
+
+<h3>
+
+Port 445
+
+</h3>
+
+
+<p>
+
+SMB enables file and printer
+sharing across networks.
+
+</p>
+
+
+</div>
+
+
+<div class="fragment">
+
+<p>
+
+It is commonly used inside
+organizations and businesses.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<!--=================================
+RDP
+==================================-->
+
+
+<section>
+
+
+<h2>
+
+RDP
+
+</h2>
+
+
+<div class="protocol-card">
+
+
+<h3>
+
+Port 3389
+
+</h3>
+
+
+<p>
+
+RDP provides graphical remote
+desktop access.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Security Perspective
+
+</h2>
+
+
+<div class="warning">
+
+Poorly protected RDP services
+have frequently been targeted
+during ransomware incidents.
+
+</div>
+
+
+<div class="fragment">
+
+<p>
+
+Organizations should protect
+remote access services carefully.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<!--=================================
+INVESTIGATOR
+==================================-->
+
+
+<section>
+
+
+<h2>
+
+Think Like An Investigator
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+You discovered:
+
+</p>
+
+
+<ul>
+
+<li>Port 53</li>
+
+<li>Port 443</li>
+
+<li>Port 22</li>
+
+<li>Port 3389</li>
+
+</ul>
+
+
+<p>
+
+Can you identify the protocols?
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<!--=================================
+CHECKPOINT
+==================================-->
+
+
+<section class="checkpoint">
+
+
+<h2>
+
+Checkpoint
+
+</h2>
+
+
+<p>
+
+Match the protocol correctly.
+
+</p>
+
+
+<ul>
+
+<li>HTTP = ?</li>
+
+<li>HTTPS = ?</li>
+
+<li>DNS = ?</li>
+
+<li>SSH = ?</li>
+
+<li>SMB = ?</li>
+
+<li>RDP = ?</li>
+
+</ul>
+
+
+
+<p class="fragment correct">
+
+
+HTTP = 80
+
+<br>
+
+HTTPS = 443
+
+<br>
+
+DNS = 53
+
+<br>
+
+SSH = 22
+
+<br>
+
+SMB = 445
+
+<br>
+
+RDP = 3389
+
+
+</p>
+
+
+</section>
+
+  <!--=================================
+IOT DEVICES
+==================================-->
+
+
+<section class="section-divider">
+
+
+<span>
+05
+</span>
+
+
+<h2>
+
+IoT Devices
+
+</h2>
+
+
+<p>
+
+Not every connected device
+is a secure device.
+
+</p>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+What Is IoT?
+
+</h2>
+
+
+<div class="cards">
+
+
+<div class="card fragment">
+
+Smart Cameras
+
+</div>
+
+
+<div class="card fragment">
+
+Smart TVs
+
+</div>
+
+
+<div class="card fragment">
+
+Printers
+
+</div>
+
+
+<div class="card fragment">
+
+Sensors
+
+</div>
+
+
+</div>
+
+
+<div class="activity-card fragment">
+
+Every connected device creates
+another possible entry point.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Default Passwords
+
+</h2>
+
+
+<div class="warning">
+
+Many IoT devices still use
+default usernames and passwords.
+
+</div>
+
+
+<div class="fragment">
+
+
+<p>
+
+Examples:
+
+</p>
+
+
+<ul>
+
+<li>admin : admin</li>
+
+<li>admin : password</li>
+
+<li>guest : guest</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Compromised Devices
+
+</h2>
+
+
+<div class="timeline-box fragment">
+
+A camera is connected
+to the network.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+Nobody changes the password.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+An attacker gains access.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+The attacker now has
+a foothold inside the network.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Security Perspective
+
+</h2>
+
+
+<div class="warning">
+
+
+An insecure IoT device may become:
+
+<ul>
+
+<li>A botnet member.</li>
+
+<li>An attack entry point.</li>
+
+<li>A surveillance device.</li>
+
+<li>A source of malicious traffic.</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="checkpoint">
+
+
+<h2>
+
+Checkpoint
+
+</h2>
+
+
+<p class="question">
+
+Why are IoT devices risky?
+
+</p>
+
+
+<ul>
+
+<li>Weak passwords</li>
+
+<li>Rarely patched</li>
+
+<li>Always connected</li>
+
+<li>Poor configurations</li>
+
+</ul>
+
+
+</section>
+
+
+
+
+
+<!--=================================
+NETWORK SECURITY CONTROLS
+==================================-->
+
+
+<section class="section-divider">
+
+
+<span>
+06
+</span>
+
+
+<h2>
+
+Network Security Controls
+
+</h2>
+
+
+<p>
+
+Who protects our network?
+
+</p>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Before Security Controls
+
+</h2>
+
+
+<div class="cards">
+
+
+<div class="card fragment">
+
+Laptop
+
+</div>
+
+
+<div class="card fragment">
+
+Internet
+
+</div>
+
+
+<div class="card fragment">
+
+Server
+
+</div>
+
+
+<div class="card fragment">
+
+Printer
+
+</div>
+
+
+</div>
+
+
+<div class="activity-card fragment">
+
+Would you allow every packet
+to enter the network?
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Firewall Appears
+
+</h2>
+
+
+<div class="control-card">
+
+
+<h3>
+
+ALLOW ?
+
+or
+
+BLOCK ?
+
+</h3>
+
+
+<p>
+
+A firewall examines traffic and
+decides whether packets should
+be allowed or denied.
+
+</p>
+
+
+</div>
+
+
+<div class="fragment">
+
+<p>
+
+It acts as the first line of defense.
+
+</p>
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Intrusion Detection System (IDS)
+
+</h2>
+
+
+<div class="control-card">
+
+
+<h3>
+
+DETECT
+
+</h3>
+
+
+<p>
+
+IDS monitors network activity
+and generates alerts when
+suspicious behaviour appears.
+
+</p>
+
+
+</div>
+
+
+<div class="activity-card fragment">
+
+IDS can tell us that something
+bad is happening.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Intrusion Prevention System (IPS)
+
+</h2>
+
+
+<div class="control-card">
+
+
+<h3>
+
+DETECT + STOP
+
+</h3>
+
+
+<p>
+
+IPS detects malicious traffic
+and automatically blocks it.
+
+</p>
+
+
+</div>
+
+
+<div class="activity-card fragment">
+
+IPS does not simply observe.
+
+<br><br>
+
+It takes action.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Think Like An Investigator
+
+</h2>
+
+
+<div class="cards">
+
+
+<div class="card fragment">
+
+Firewall
+
+<br>
+
+Allow or Block
+
+</div>
+
+
+
+<div class="card fragment">
+
+IDS
+
+<br>
+
+Detect
+
+</div>
+
+
+
+<div class="card fragment">
+
+IPS
+
+<br>
+
+Detect + Stop
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Suspicious Connection
+
+</h2>
+
+
+<div class="timeline-box fragment">
+
+Unknown IP Address
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+Multiple Failed Connections
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+IDS Generates An Alert
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+IPS Blocks The Connection
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="checkpoint">
+
+
+<h2>
+
+Checkpoint
+
+</h2>
+
+
+<p>
+
+Choose the correct answer.
+
+</p>
+
+
+<ul>
+
+<li>
+Who allows or blocks traffic?
+</li>
+
+<li>
+Who detects attacks?
+</li>
+
+<li>
+Who detects AND blocks attacks?
+</li>
+
+</ul>
+
+
+
+<p class="fragment correct">
+
+Firewall
+
+<br>
+
+IDS
+
+<br>
+
+IPS
+
+</p>
+
+
+</section>
+
+  <!--=================================
+WIRESHARK
+==================================-->
+
+
+<section class="section-divider">
+
+
+<span>
+07
+</span>
+
+
+<h2>
+
+Wireshark Introduction
+
+</h2>
+
+
+<p>
+
+You do NOT need to understand
+every packet to become a
+network investigator.
+
+</p>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+DON'T PANIC !
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+You opened Wireshark and found:
+
+</p>
+
+
+<h1>
+
+1000+ PACKETS
+
+</h1>
+
+
+<p>
+
+Do you really need to understand
+all of them?
+
+</p>
+
+
+</div>
+
+
+
+<div class="fragment">
+
+<p class="highlight">
+
+NO.
+
+</p>
+
+<p>
+
+Today we only care about:
+
+</p>
+
+
+<ul>
+
+<li>Source IP</li>
+
+<li>Destination IP</li>
+
+<li>Port Number</li>
+
+<li>Protocol</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Packet List
+
+</h2>
+
+
+<div class="network-card">
+
+
+<h3>
+
+Packet List
+
+</h3>
+
+
+<p>
+
+Displays every captured packet
+travelling across the network.
+
+</p>
+
+
+</div>
+
+
+
+<div class="fragment">
+
+<p>
+
+Every row tells part of the story.
+
+</p>
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Packet Details
+
+</h2>
+
+
+<div class="network-card">
+
+
+<h3>
+
+Packet Details
+
+</h3>
+
+
+<p>
+
+Provides detailed information
+about addresses, ports and
+protocols.
+
+</p>
+
+
+</div>
+
+
+
+<div class="activity-card fragment">
+
+This is where investigators
+begin asking questions.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Packet Bytes
+
+</h2>
+
+
+<div class="network-card">
+
+
+<h3>
+
+Packet Bytes
+
+</h3>
+
+
+<p>
+
+Displays the raw contents of
+the selected packet.
+
+</p>
+
+
+</div>
+
+
+
+<div class="fragment">
+
+<p>
+
+Investigators may use this
+information during deeper
+analysis.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Useful Filters
+
+</h2>
+
+
+<pre>
+
+<code>
+
 http
-tcp.port == 445</code></pre></section>
-<section class="section-divider"><span>08</span><h2>Labs</h2></section>
-<section><h2>Lab 1</h2><div class="lab-card"><ol><li>Open the packet capture.</li><li>Identify the source IP.</li><li>Identify the destination IP.</li><li>Explain the observed behaviour.</li></ol></div></section>
-<section><h2>Lab 2</h2><div class="lab-card">Investigate suspicious traffic patterns and explain your findings.</div></section>
-<section><h2>Lab 3</h2><div class="lab-card">Analyse packet information without using Wireshark.</div></section>
-<section class="section-divider"><span>09</span><h2>Final Investigation</h2></section>
-<section><h2>Case Timeline</h2><div class="timeline-box fragment">Phishing Email Received</div><div class="timeline-box fragment">DNS Lookup</div><div class="timeline-box fragment">HTTPS Connection</div><div class="timeline-box fragment">Beaconing Activity</div></section>
-<section><h2>Evidence Correlation</h2><div class="investigation">Correlate IP addresses, protocols and timing information to explain the incident.</div></section>
-<section class="section-divider"><span>10</span><h2>Closing Challenge & Wrap Up</h2></section>
-<section><h2>Closing Challenge</h2><div class="activity-card">Choose one packet clue and explain how it contributed to the investigation.</div></section>
-<section class="summary"><h2>Wrap Up</h2><div class="cards"><div class="card">Packets carry evidence.</div><div class="card">Protocols reveal intent.</div><div class="card">Security controls protect networks.</div><div class="card">Network evidence completes the investigation.</div></div></section>
-</div></div>
+
+ip.addr == 10.0.0.8
+
+tcp.port == 445
+
+dns
+
+https
+
+</code>
+
+</pre>
+
+
+<div class="activity-card fragment">
+
+Filters help investigators focus
+only on relevant traffic.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+WOW MOMENT
+
+</h2>
+
+
+<div class="timeline-box fragment">
+
+You opened Google.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+Wireshark captured 100 packets.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+You only clicked ONE button.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+Every packet became evidence.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Think Like An Investigator
+
+</h2>
+
+
+<div class="packet-box">
+
+
+<h3>
+
+Captured Packet
+
+</h3>
+
+
+<span>
+
+192.168.1.15
+
+</span>
+
+
+<span>
+
+443
+
+</span>
+
+
+<span>
+
+HTTPS
+
+</span>
+
+
+<span>
+
+104.xx.xx.xx
+
+</span>
+
+
+</div>
+
+
+
+<div class="activity-card fragment">
+
+
+<p class="question">
+
+Can you identify:
+
+</p>
+
+
+<ul>
+
+<li>Source IP ?</li>
+
+<li>Destination IP ?</li>
+
+<li>Port Number ?</li>
+
+<li>Protocol ?</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Network Detective Challenge
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+You discovered:
+
+</p>
+
+
+<ul>
+
+<li>Port 443</li>
+
+<li>HTTPS Traffic</li>
+
+<li>Repeated Connections</li>
+
+<li>Unknown Destination</li>
+
+</ul>
+
+
+<p>
+
+Should we investigate further?
+
+</p>
+
+
+</div>
+
+
+
+<p class="fragment highlight">
+
+YES !
+
+</p>
+
+
+</section>
+
+
+
+
+<section class="checkpoint">
+
+
+<h2>
+
+Checkpoint
+
+</h2>
+
+
+<p>
+
+Which FOUR clues matter most
+during today's workshop?
+
+</p>
+
+
+<ul>
+
+<li>Source IP</li>
+
+<li>Destination IP</li>
+
+<li>Port Number</li>
+
+<li>Protocol</li>
+
+</ul>
+
+
+
+<p class="fragment correct">
+
+Congratulations!
+
+<br>
+
+You are officially a Network
+Detective.
+
+</p>
+
+
+</section>
+
+  <!--=================================
+LABS
+==================================-->
+
+
+<section class="section-divider">
+
+
+<span>
+
+08
+
+</span>
+
+
+<h2>
+
+Network Investigation Labs
+
+</h2>
+
+
+<p>
+
+It is time to become the
+investigator.
+
+</p>
+
+
+</section>
+
+
+
+
+<!--=================================
+MISSION 01
+==================================-->
+
+
+<section>
+
+
+<h2>
+
+MISSION #01
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+A suspicious packet has been
+captured.
+
+</p>
+
+
+<p>
+
+Can you identify:
+
+</p>
+
+
+<ul>
+
+<li>Source IP ?</li>
+
+<li>Destination IP ?</li>
+
+<li>Port Number ?</li>
+
+<li>Protocol ?</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Lab 01
+
+</h2>
+
+
+<div class="lab-card">
+
+
+<h3>
+
+Become The Investigator
+
+</h3>
+
+
+<ol>
+
+<li>
+Open the packet capture.
+</li>
+
+
+<li>
+Identify the Source IP.
+</li>
+
+
+<li>
+Identify the Destination IP.
+</li>
+
+
+<li>
+Identify the Protocol.
+</li>
+
+
+<li>
+Explain what happened.
+</li>
+
+
+</ol>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="checkpoint">
+
+
+<h2>
+
+Checkpoint
+
+</h2>
+
+
+<p>
+
+Can you identify the FOUR
+pieces of evidence?
+
+</p>
+
+
+<ul>
+
+<li>Source IP</li>
+
+<li>Destination IP</li>
+
+<li>Port Number</li>
+
+<li>Protocol</li>
+
+</ul>
+
+
+</section>
+
+
+
+
+<!--=================================
+MISSION 02
+==================================-->
+
+
+<section>
+
+
+<h2>
+
+MISSION #02
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+Something suspicious is
+happening inside the network.
+
+</p>
+
+
+<p>
+
+Can you discover the attack?
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Port Scan Investigation
+
+</h2>
+
+
+<div class="timeline-box fragment">
+
+Connection attempt detected.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+Another connection attempt.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+20 ports were scanned.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+The attacker is searching
+for an open door.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+C2 Beacon Activity
+
+</h2>
+
+
+<div class="timeline-box fragment">
+
+Outbound connection detected.
+
+</div>
+
+
+<div class="timeline-box fragment">
+
+The connection repeats
+every 30 seconds.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+The destination is unknown.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+Possible Command and
+Control communication.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Think Like An Investigator
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+Which behaviour looks
+more suspicious?
+
+</p>
+
+
+<ul>
+
+<li>Port Scan</li>
+
+<li>Repeated Connections</li>
+
+<li>Unknown Destination</li>
+
+<li>C2 Beacon</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="checkpoint">
+
+
+<h2>
+
+Checkpoint
+
+</h2>
+
+
+<p>
+
+What makes traffic suspicious?
+
+</p>
+
+
+<ul>
+
+<li>Repeated connections.</li>
+
+<li>Unknown destinations.</li>
+
+<li>Port Scanning.</li>
+
+<li>Unexpected protocols.</li>
+
+</ul>
+
+
+</section>
+
+
+
+
+<!--=================================
+MISSION 03
+==================================-->
+
+
+<section>
+
+
+<h2>
+
+MISSION #03
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+Can you solve the packet
+challenge without Wireshark?
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+HTML Packet Challenge
+
+</h2>
+
+
+<div class="packet-box">
+
+
+<h3>
+
+Captured Packet
+
+</h3>
+
+
+<span>
+
+192.168.1.25
+
+</span>
+
+
+<span>
+
+53
+
+</span>
+
+
+<span>
+
+DNS
+
+</span>
+
+
+<span>
+
+8.8.8.8
+
+</span>
+
+
+</div>
+
+
+
+<div class="fragment">
+
+
+<p>
+
+Questions:
+
+</p>
+
+
+<ul>
+
+<li>Which protocol?</li>
+
+<li>Which port?</li>
+
+<li>Which address is external?</li>
+
+<li>Should we investigate further?</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Legitimate or Malicious?
+
+</h2>
+
+
+<div class="cards">
+
+
+<div class="card fragment">
+
+HTTPS
+
+<br>
+
+443
+
+<br>
+
+Bank Login
+
+</div>
+
+
+
+<div class="card fragment">
+
+RDP
+
+<br>
+
+3389
+
+<br>
+
+Unknown Destination
+
+</div>
+
+
+
+</div>
+
+
+
+<div class="activity-card fragment">
+
+Which one deserves more
+attention?
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+TryHackMe Practice
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+Want more practice?
+
+</p>
+
+
+<p>
+
+Explore beginner friendly
+network challenges using:
+
+</p>
+
+
+<h3>
+
+TryHackMe
+
+</h3>
+
+
+<p>
+
+Continue building your
+investigation skills.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="checkpoint">
+
+
+<h2>
+
+LAB RECAP
+
+</h2>
+
+
+<p>
+
+Today you successfully:
+
+</p>
+
+
+<ul>
+
+<li>Identified packet evidence.</li>
+
+<li>Investigated suspicious traffic.</li>
+
+<li>Recognised attack patterns.</li>
+
+<li>Solved packet challenges.</li>
+
+</ul>
+
+
+<p class="fragment correct">
+
+MISSION COMPLETE !
+
+</p>
+
+
+</section>
+
+  <!--=================================
+FINAL INVESTIGATION
+==================================-->
+
+
+<section class="section-divider">
+
+
+<span>
+
+09
+
+</span>
+
+
+<h2>
+
+Final Investigation
+
+</h2>
+
+
+<p>
+
+Can you solve today's case?
+
+</p>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Friday Morning Incident
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+An employee receives an email
+containing a suspicious link.
+
+</p>
+
+
+<p>
+
+What happens next?
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+DNS Lookup Detected
+
+</h2>
+
+
+<div class="timeline-box fragment">
+
+The employee clicks the link.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+A DNS request is generated.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+An IP address is returned.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+A connection is established.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+HTTPS Connection
+
+</h2>
+
+
+<div class="timeline-box fragment">
+
+The destination uses Port 443.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+The protocol is HTTPS.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+Traffic is encrypted.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+Further investigation is required.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Something Looks Strange
+
+</h2>
+
+
+<div class="timeline-box fragment">
+
+Repeated outbound connections
+appear every 30 seconds.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+The destination is unknown.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+The traffic never stops.
+
+</div>
+
+
+
+<div class="timeline-box fragment">
+
+Suspicious behaviour detected.
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Firewall & IDS Logs
+
+</h2>
+
+
+<div class="cards">
+
+
+<div class="card fragment">
+
+Firewall
+
+<br><br>
+
+Outbound connection detected.
+
+</div>
+
+
+
+<div class="card fragment">
+
+IDS
+
+<br><br>
+
+Repeated traffic detected.
+
+</div>
+
+
+
+<div class="card fragment">
+
+IPS
+
+<br><br>
+
+Connection blocked.
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Can You Prove Compromise?
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+Which pieces of evidence
+support your conclusion?
+
+</p>
+
+
+<ul>
+
+<li>DNS Requests</li>
+
+<li>Port Number</li>
+
+<li>Protocol Used</li>
+
+<li>Repeated Connections</li>
+
+<li>Firewall Logs</li>
+
+<li>IDS Alerts</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="checkpoint">
+
+
+<h2>
+
+Investigator Checkpoint
+
+</h2>
+
+
+<p>
+
+Can you identify:
+
+</p>
+
+
+<ul>
+
+<li>The Protocol?</li>
+
+<li>The Port?</li>
+
+<li>The Destination?</li>
+
+<li>The Suspicious Behaviour?</li>
+
+</ul>
+
+
+</section>
+
+
+
+
+
+<!--=================================
+CLOSING CHALLENGE
+==================================-->
+
+
+<section class="section-divider">
+
+
+<span>
+
+10
+
+</span>
+
+
+<h2>
+
+Closing Challenge
+
+</h2>
+
+
+<p>
+
+Everything you've learned
+will be needed here.
+
+</p>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Which Packet Is Suspicious?
+
+</h2>
+
+
+<div class="cards">
+
+
+<div class="card fragment">
+
+192.168.1.15
+
+<br><br>
+
+443
+
+<br><br>
+
+HTTPS
+
+</div>
+
+
+
+<div class="card fragment">
+
+192.168.1.25
+
+<br><br>
+
+53
+
+<br><br>
+
+DNS
+
+</div>
+
+
+
+<div class="card fragment">
+
+10.0.0.15
+
+<br><br>
+
+3389
+
+<br><br>
+
+Unknown Destination
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+Reveal The Answer
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<p class="question">
+
+The most suspicious packet is:
+
+</p>
+
+
+<h1>
+
+RDP (3389)
+
+</h1>
+
+
+<p>
+
+Why?
+
+</p>
+
+
+<ul>
+
+<li>Unexpected destination.</li>
+
+<li>Remote access activity.</li>
+
+<li>Requires further investigation.</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+End Of Day Recap
+
+</h2>
+
+
+<div class="cards">
+
+
+<div class="card fragment">
+
+Source IP
+
+</div>
+
+
+
+<div class="card fragment">
+
+Destination IP
+
+</div>
+
+
+
+<div class="card fragment">
+
+Port Numbers
+
+</div>
+
+
+
+<div class="card fragment">
+
+Protocols
+
+</div>
+
+
+
+<div class="card fragment">
+
+TCP & UDP
+
+</div>
+
+
+
+<div class="card fragment">
+
+Wireshark
+
+</div>
+
+
+
+<div class="card fragment">
+
+IoT Risks
+
+</div>
+
+
+
+<div class="card fragment">
+
+Security Controls
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section>
+
+
+<h2>
+
+10 Second Quiz
+
+</h2>
+
+
+<div class="activity-card">
+
+
+<ul>
+
+<li>What is Port 443 ?</li>
+
+<li>What protocol uses Port 53 ?</li>
+
+<li>What does IDS do ?</li>
+
+<li>What does IPS do ?</li>
+
+<li>What makes traffic suspicious ?</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="summary">
+
+
+<h2>
+
+Wrap Up
+
+</h2>
+
+
+<p>
+
+Today you learned how to:
+
+</p>
+
+
+<ul>
+
+<li>Identify network evidence.</li>
+
+<li>Understand protocols.</li>
+
+<li>Analyse suspicious traffic.</li>
+
+<li>Use Wireshark concepts.</li>
+
+<li>Investigate attack patterns.</li>
+
+<li>Think like a Network Detective.</li>
+
+</ul>
+
+
+<br>
+
+
+<h3>
+
+Remember:
+
+</h3>
+
+
+<p class="highlight">
+
+Every Packet Tells A Story.
+
+</p>
+
+
+</section>
+
+
+
+
+<section class="cover">
+
+
+<h1>
+
+MISSION COMPLETE
+
+</h1>
+
+
+<p>
+
+You are now ready to begin
+your journey as a Network
+Investigator.
+
+</p>
+
+
+<div class="badges">
+
+<span>
+
+DAY 03 COMPLETE
+
+</span>
+
+
+<span>
+
+NETWORK DETECTIVE
+
+</span>
+
+
+<span>
+
+SEE YOU IN DAY 04
+
+</span>
+
+
+</div>
+
+
+</section>
+
+
+
+
+</div>
+
+</div>
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+
 <script src="js/majal.js"></script>
-</body></html>
+
+</body>
+
+</html>
